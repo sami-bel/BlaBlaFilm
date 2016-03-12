@@ -40,26 +40,20 @@ class Messages extends Controller
      */
     public function createMessage($idSend, $idRecived, $content)
     {
+        $sender =$this->em->getRepository("WebserviceMainBundle:User")->find($idSend);
+        $recived =$this->em->getRepository("WebserviceMainBundle:User")->find($idRecived);
+
         $message= new Message();
-            $message->setIdSend($idSend);
-            $message->setIdRecived($idRecived);
+            $message->setIdSend($sender);
+            $message->setIdRecived($recived);
             $message->setContent($content);
             $message->setMsgRead(false);
             $message->setFlag(0); // 0 :message n'est pas supprimé ; 1 message supprimé par le sender ;2 par le recived; 3 supprimé par les 2
-
-            if($this->sendMessage($message)) {
-                $this->em->persist($message);
-                $this->em->flush();
-                return "le message  a bien été bien envoyé";
-            }
-
-        return " erreur d'envoi";
+            $this->em->persist($message);
+            $this->em->flush();
+            return "le message  a bien été bien envoyé";
     }
 
-    private function sendMessage($message)
-    {
-          // à devlopper !!
-    }
 
     /**
      * recuperer les messages récus
@@ -112,11 +106,15 @@ class Messages extends Controller
     {
         $message = $this->em->getRepository("WebserviceMainBundle:Message")->findBy(array("id" => $idMessage));
 
+        var_dump($message);
+        exit();
         if(!$idMessage) {
             return "Le message n'existe pas ";
         }
         if ($message->getIdSend()== $idUser )
+
         {
+
             if ($message->getFlag() == 0 and $message->getFlag() != 1  )
                 $message->setFlag(1); // le message serai supprimé par le sendre
             else $message->setFlag(3);
@@ -128,7 +126,6 @@ class Messages extends Controller
         else $message->setFlag(3);
 
         $this->em->flush();
-        return " le message a été bien supprimé";
     }
 
 }

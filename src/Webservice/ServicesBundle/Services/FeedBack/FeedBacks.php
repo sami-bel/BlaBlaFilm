@@ -6,7 +6,7 @@
  * Time: 18:32
  */
 
-namespace Webservice\ServicesBundle\Services\Message;
+namespace Webservice\ServicesBundle\Services\FeedBack;
 
 use Doctrine\ORM\EntityManager;
 use JMS\Serializer\Serializer;
@@ -41,14 +41,19 @@ class FeedBacks extends Controller
      * @param $rating
      * @return Response
      */
-    public function createFeddBack($idExaminer ,$idTarget,$typeFeedBack,$evaluation,$rating)
+    public function createFeedBack($idExaminer ,$idTarget,$typeFeedBack,$evaluation,$rating)
     {
+
+        $examine =$this->em->getRepository("WebserviceMainBundle:User")->find($idExaminer);
+        dump($examine);
+
         $feedBack= new Feedback();
-            $feedBack->setIdExaminer($idExaminer);
+            $feedBack->setIdExaminer($examine);
             $feedBack->setIdTarget($idTarget);
             $feedBack->setTypeFeedback($typeFeedBack);
             $feedBack->setEvaluation($evaluation);
             $feedBack->setRating($rating);
+
             $this->em->persist($feedBack);
             $this->em->flush();
 
@@ -145,7 +150,7 @@ class FeedBacks extends Controller
     }
 
     /**
-     *  recuperer les feed back d un equipment 
+     *  recuperer les feed back d un equipment
      * @param $idEquip
      * @return array
      */

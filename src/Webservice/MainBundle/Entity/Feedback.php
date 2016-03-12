@@ -70,7 +70,7 @@ class Feedback
      *
      * @return Feedback
      */
-    public function setIdExaminer(\Webservice\MainBundle\Entity\User $idExaminer)
+    public function setIdExaminer(\Webservice\MainBundle\Entity\User $idExaminer =null)
     {
         $this->idExaminer = $idExaminer;
 

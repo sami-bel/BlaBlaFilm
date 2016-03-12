@@ -1,6 +1,8 @@
 <?php
 namespace Webservice\MainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 /**
  * User
  *
@@ -33,18 +35,21 @@ class User
      * @var int
      *
      * @ORM\Column(name="phone", type="integer")
+     * @Expose
      */
     private $phone;
     /**
      * @var string
      *
      * @ORM\Column(name="mail", type="string", length=100, unique=true)
+     *
      */
     private $mail;
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=512)
+     *
      */
     private $password;
     /**
