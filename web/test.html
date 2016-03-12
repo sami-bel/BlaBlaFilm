@@ -1,0 +1,1592 @@
+string(153220) "<script> Sfdump = window.Sfdump || (function (doc) { var refStyle = doc.createElement('style'), rxEsc = /([.*+?^${}()|\[\]\/\\])/g, idRx = /\bsf-dump-\d+-ref[012]\w+\b/, keyHint = 0 <= navigator.platform.toUpperCase().indexOf('MAC') ? 'Cmd' : 'Ctrl', addEventListener = function (e, n, cb) { e.addEventListener(n, cb, false); }; (doc.documentElement.firstElementChild || doc.documentElement.children[0]).appendChild(refStyle); if (!doc.addEventListener) { addEventListener = function (element, eventName, callback) { element.attachEvent('on' + eventName, function (e) { e.preventDefault = function () {e.returnValue = false;}; e.target = e.srcElement; callback(e); }); }; } function toggle(a, recursive) { var s = a.nextSibling || {}, oldClass = s.className, arrow, newClass; if ('sf-dump-compact' == oldClass) { arrow = '&#9660;'; newClass = 'sf-dump-expanded'; } else if ('sf-dump-expanded' == oldClass) { arrow = '&#9654;'; newClass = 'sf-dump-compact'; } else { return false; } a.lastChild.innerHTML = arrow; s.className = newClass; if (recursive) { try { a = s.querySelectorAll('.'+oldClass); for (s = 0; s < a.length; ++s) { if (a[s].className !== newClass) { a[s].className = newClass; a[s].previousSibling.lastChild.innerHTML = arrow; } } } catch (e) { } } return true; }; return function (root) { root = doc.getElementById(root); function a(e, f) { addEventListener(root, e, function (e) { if ('A' == e.target.tagName) { f(e.target, e); } else if ('A' == e.target.parentNode.tagName) { f(e.target.parentNode, e); } }); }; function isCtrlKey(e) { return e.ctrlKey || e.metaKey; } addEventListener(root, 'mouseover', function (e) { if ('' != refStyle.innerHTML) { refStyle.innerHTML = ''; } }); a('mouseover', function (a) { if (a = idRx.exec(a.className)) { try { refStyle.innerHTML = 'pre.sf-dump .'+a[0]+'{background-color: #B729D9; color: #FFF !important; border-radius: 2px}'; } catch (e) { } } }); a('click', function (a, e) { if (/\bsf-dump-toggle\b/.test(a.className)) { e.preventDefault(); if (!toggle(a, isCtrlKey(e))) { var r = doc.getElementById(a.getAttribute('href').substr(1)), s = r.previousSibling, f = r.parentNode, t = a.parentNode; t.replaceChild(r, a); f.replaceChild(a, s); t.insertBefore(s, r); f = f.firstChild.nodeValue.match(indentRx); t = t.firstChild.nodeValue.match(indentRx); if (f && t && f[0] !== t[0]) { r.innerHTML = r.innerHTML.replace(new RegExp('^'+f[0].replace(rxEsc, '\\$1'), 'mg'), t[0]); } if ('sf-dump-compact' == r.className) { toggle(s, isCtrlKey(e)); } } if (doc.getSelection) { try { doc.getSelection().removeAllRanges(); } catch (e) { doc.getSelection().empty(); } } else { doc.selection.empty(); } } }); var indentRx = new RegExp('^('+(root.getAttribute('data-indent-pad') || ' ').replace(rxEsc, '\\$1')+')+', 'm'), elt = root.getElementsByTagName('A'), len = elt.length, i = 0, t = []; while (i < len) t.push(elt[i++]); elt = root.getElementsByTagName('SAMP'); len = elt.length; i = 0; while (i < len) t.push(elt[i++]); root = t; len = t.length; i = t = 0; while (i < len) { elt = root[i]; if ("SAMP" == elt.tagName) { elt.className = "sf-dump-expanded"; a = elt.previousSibling || {}; if ('A' != a.tagName) { a = doc.createElement('A'); a.className = 'sf-dump-ref'; elt.parentNode.insertBefore(a, elt); } else { a.innerHTML += ' '; } a.title = (a.title ? a.title+'\n[' : '[')+keyHint+'+click] Expand all children'; a.innerHTML += '<span>&#9660;</span>'; a.className += ' sf-dump-toggle'; if ('sf-dump' != elt.parentNode.className) { toggle(a); } } else if ("sf-dump-ref" == elt.className && (a = elt.getAttribute('href'))) { a = a.substr(1); elt.className += ' '+a; if (/[\[{]$/.test(elt.previousSibling.nodeValue)) { a = a != elt.nextSibling.id && doc.getElementById(a); try { t = a.nextSibling; elt.appendChild(a); t.parentNode.insertBefore(a, t); if (/^[@#]/.test(elt.innerHTML)) { elt.innerHTML += ' <span>&#9654;</span>'; } else { elt.innerHTML = '<span>&#9654;</span>'; elt.className = 'sf-dump-ref'; } elt.className += ' sf-dump-toggle'; } catch (e) { if ('&' == elt.innerHTML.charAt(0)) { elt.innerHTML = '&hellip;'; elt.className = 'sf-dump-ref'; } } } } ++i; } }; })(document); </script> <style> pre.sf-dump { display: block; white-space: pre; padding: 5px; } pre.sf-dump span { display: inline; } pre.sf-dump .sf-dump-compact { display: none; } pre.sf-dump abbr { text-decoration: none; border: none; cursor: help; } pre.sf-dump a { text-decoration: none; cursor: pointer; border: 0; outline: none; }pre.sf-dump{background-color:#18171B; color:#FF8400; line-height:1.2em; font:12px Menlo, Monaco, Consolas, monospace; word-wrap: break-word; white-space: pre-wrap; position:relative; z-index:99999; word-break: normal}pre.sf-dump .sf-dump-num{font-weight:bold; color:#1299DA}pre.sf-dump .sf-dump-const{font-weight:bold}pre.sf-dump .sf-dump-str{font-weight:bold; color:#56DB3A}pre.sf-dump .sf-dump-note{color:#1299DA}pre.sf-dump .sf-dump-ref{color:#A0A0A0}pre.sf-dump .sf-dump-public{color:#FFFFFF}pre.sf-dump .sf-dump-protected{color:#FFFFFF}pre.sf-dump .sf-dump-private{color:#FFFFFF}pre.sf-dump .sf-dump-meta{color:#B729D9}pre.sf-dump .sf-dump-key{color:#56DB3A}pre.sf-dump .sf-dump-index{color:#1299DA}</style><pre class=sf-dump id=sf-dump-660838885 data-indent-pad="  "><abbr title="/var/www/html/webservices_3.0/src/Webservice/ServicesBundle/Services/Film/Films.php"><span class=sf-dump-meta>Films.php</span></abbr> on line <span class=sf-dump-meta>136</span>:
+<span class=sf-dump-note>array:2</span> [<samp>
+  "<span class=sf-dump-key>feed</span>" => <span class=sf-dump-note>array:5</span> [<samp>
+    "<span class=sf-dump-key>page</span>" => <span class=sf-dump-num>1</span>
+    "<span class=sf-dump-key>count</span>" => <span class=sf-dump-num>10</span>
+    "<span class=sf-dump-key>results</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>type</span>" => "<span class=sf-dump-str title="5 characters">movie</span>"
+        "<span class=sf-dump-key>$</span>" => <span class=sf-dump-num>45</span>
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>totalResults</span>" => <span class=sf-dump-num>45</span>
+    "<span class=sf-dump-key>movie</span>" => <span class=sf-dump-note>array:10</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:8</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>9196</span>
+        "<span class=sf-dump-key>originalTitle</span>" => "<span class=sf-dump-str title="6 characters">Batman</span>"
+        "<span class=sf-dump-key>productionYear</span>" => <span class=sf-dump-num>1966</span>
+        "<span class=sf-dump-key>release</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>releaseDate</span>" => "<span class=sf-dump-str title="10 characters">2016-03-23</span>"
+        </samp>]
+        "<span class=sf-dump-key>castingShort</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>directors</span>" => "<span class=sf-dump-str title="19 characters">Leslie H. Martinson</span>"
+          "<span class=sf-dump-key>actors</span>" => "<span class=sf-dump-str title="68 characters">Adam West, Burt Ward, Cesar Romero, Lee Meriwether, Burgess Meredith</span>"
+        </samp>]
+        "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>userRating</span>" => <span class=sf-dump-num>2.33382</span>
+        </samp>]
+        "<span class=sf-dump-key>poster</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="35 characters">/pictures/16/03/02/11/07/029161.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="63 characters">http://fr.web.img2.acsta.net/pictures/16/03/02/11/07/029161.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="57 characters">http://www.allocine.fr/film/fichefilm_gen_cfilm=9196.html</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>1</span> => <span class=sf-dump-note>array:8</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>219262</span>
+        "<span class=sf-dump-key>originalTitle</span>" => "<span class=sf-dump-str title="34 characters">Batman v Superman: Dawn Of Justice</span>"
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="40 characters">Batman v Superman : L&rsquo;Aube de la Justice</span>"
+        "<span class=sf-dump-key>productionYear</span>" => <span class=sf-dump-num>2016</span>
+        "<span class=sf-dump-key>release</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>releaseDate</span>" => "<span class=sf-dump-str title="10 characters">2016-03-23</span>"
+        </samp>]
+        "<span class=sf-dump-key>castingShort</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>directors</span>" => "<span class=sf-dump-str title="11 characters">Zack Snyder</span>"
+          "<span class=sf-dump-key>actors</span>" => "<span class=sf-dump-str title="64 characters">Ben Affleck, Henry Cavill, Jesse Eisenberg, Gal Gadot, Amy Adams</span>"
+        </samp>]
+        "<span class=sf-dump-key>poster</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="35 characters">/pictures/16/02/03/11/17/130929.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="63 characters">http://fr.web.img2.acsta.net/pictures/16/02/03/11/17/130929.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="59 characters">http://www.allocine.fr/film/fichefilm_gen_cfilm=219262.html</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>2</span> => <span class=sf-dump-note>array:8</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>4966</span>
+        "<span class=sf-dump-key>originalTitle</span>" => "<span class=sf-dump-str title="6 characters">Batman</span>"
+        "<span class=sf-dump-key>productionYear</span>" => <span class=sf-dump-num>1989</span>
+        "<span class=sf-dump-key>release</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>releaseDate</span>" => "<span class=sf-dump-str title="10 characters">1989-09-13</span>"
+        </samp>]
+        "<span class=sf-dump-key>castingShort</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>directors</span>" => "<span class=sf-dump-str title="10 characters">Tim Burton</span>"
+          "<span class=sf-dump-key>actors</span>" => "<span class=sf-dump-str title="79 characters">Michael Keaton, Kim Basinger, Jack Nicholson, Michael Gough, Billy Dee Williams</span>"
+        </samp>]
+        "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>pressRating</span>" => <span class=sf-dump-num>4</span>
+          "<span class=sf-dump-key>userRating</span>" => <span class=sf-dump-num>3.89057</span>
+        </samp>]
+        "<span class=sf-dump-key>poster</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/64/72/95/18970280.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img1.acsta.net/medias/nmedia/18/64/72/95/18970280.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="57 characters">http://www.allocine.fr/film/fichefilm_gen_cfilm=4966.html</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>3</span> => <span class=sf-dump-note>array:8</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>45412</span>
+        "<span class=sf-dump-key>originalTitle</span>" => "<span class=sf-dump-str title="6 characters">Batman</span>"
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="6 characters">Batman</span>"
+        "<span class=sf-dump-key>productionYear</span>" => <span class=sf-dump-num>1943</span>
+        "<span class=sf-dump-key>castingShort</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>directors</span>" => "<span class=sf-dump-str title="15 characters">Lambert Hillyer</span>"
+          "<span class=sf-dump-key>actors</span>" => "<span class=sf-dump-str title="79 characters">Lewis Wilson, Douglas Croft, J. Carrol Naish, Shirley Patterson, William Austin</span>"
+        </samp>]
+        "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>userRating</span>" => <span class=sf-dump-num>2.97832</span>
+        </samp>]
+        "<span class=sf-dump-key>poster</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/65/67/72/18881575.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img3.acsta.net/medias/nmedia/18/65/67/72/18881575.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="58 characters">http://www.allocine.fr/film/fichefilm_gen_cfilm=45412.html</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>4</span> => <span class=sf-dump-note>array:8</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>51013</span>
+        "<span class=sf-dump-key>originalTitle</span>" => "<span class=sf-dump-str title="13 characters">Batman Begins</span>"
+        "<span class=sf-dump-key>productionYear</span>" => <span class=sf-dump-num>2005</span>
+        "<span class=sf-dump-key>release</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>releaseDate</span>" => "<span class=sf-dump-str title="10 characters">2005-06-15</span>"
+        </samp>]
+        "<span class=sf-dump-key>castingShort</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>directors</span>" => "<span class=sf-dump-str title="17 characters">Christopher Nolan</span>"
+          "<span class=sf-dump-key>actors</span>" => "<span class=sf-dump-str title="72 characters">Christian Bale, Katie Holmes, Michael Caine, Cillian Murphy, Liam Neeson</span>"
+        </samp>]
+        "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>pressRating</span>" => <span class=sf-dump-num>3.66667</span>
+          "<span class=sf-dump-key>userRating</span>" => <span class=sf-dump-num>4.0938</span>
+        </samp>]
+        "<span class=sf-dump-key>poster</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/35/23/40/18431141.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img3.acsta.net/medias/nmedia/18/35/23/40/18431141.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="58 characters">http://www.allocine.fr/film/fichefilm_gen_cfilm=51013.html</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>5</span> => <span class=sf-dump-note>array:9</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>7570</span>
+        "<span class=sf-dump-key>originalTitle</span>" => "<span class=sf-dump-str title="14 characters">Batman Returns</span>"
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="15 characters">Batman, le d&eacute;fi</span>"
+        "<span class=sf-dump-key>productionYear</span>" => <span class=sf-dump-num>1992</span>
+        "<span class=sf-dump-key>release</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>releaseDate</span>" => "<span class=sf-dump-str title="10 characters">1992-07-15</span>"
+        </samp>]
+        "<span class=sf-dump-key>castingShort</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>directors</span>" => "<span class=sf-dump-str title="10 characters">Tim Burton</span>"
+          "<span class=sf-dump-key>actors</span>" => "<span class=sf-dump-str title="82 characters">Michael Keaton, Michelle Pfeiffer, Danny DeVito, Christopher Walken, Michael Gough</span>"
+        </samp>]
+        "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>pressRating</span>" => <span class=sf-dump-num>4.6</span>
+          "<span class=sf-dump-key>userRating</span>" => <span class=sf-dump-num>3.79439</span>
+        </samp>]
+        "<span class=sf-dump-key>poster</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/65/05/94/19253696.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img3.acsta.net/medias/nmedia/18/65/05/94/19253696.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="57 characters">http://www.allocine.fr/film/fichefilm_gen_cfilm=7570.html</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>6</span> => <span class=sf-dump-note>array:6</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>211012</span>
+        "<span class=sf-dump-key>originalTitle</span>" => "<span class=sf-dump-str title="10 characters">The Batman</span>"
+        "<span class=sf-dump-key>productionYear</span>" => <span class=sf-dump-num>2018</span>
+        "<span class=sf-dump-key>castingShort</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>directors</span>" => "<span class=sf-dump-str title="11 characters">Ben Affleck</span>"
+          "<span class=sf-dump-key>actors</span>" => "<span class=sf-dump-str title="11 characters">Ben Affleck</span>"
+        </samp>]
+        "<span class=sf-dump-key>poster</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="35 characters">/pictures/16/03/09/13/43/255892.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="63 characters">http://fr.web.img5.acsta.net/pictures/16/03/09/13/43/255892.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="59 characters">http://www.allocine.fr/film/fichefilm_gen_cfilm=211012.html</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>7</span> => <span class=sf-dump-note>array:5</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>232239</span>
+        "<span class=sf-dump-key>originalTitle</span>" => "<span class=sf-dump-str title="21 characters">The Lego Batman Movie</span>"
+        "<span class=sf-dump-key>productionYear</span>" => <span class=sf-dump-num>2017</span>
+        "<span class=sf-dump-key>castingShort</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>directors</span>" => "<span class=sf-dump-str title="11 characters">Chris McKay</span>"
+          "<span class=sf-dump-key>actors</span>" => "<span class=sf-dump-str title="60 characters">Will Arnett, Michael Cera, Zach Galifianakis, Rosario Dawson</span>"
+        </samp>]
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="59 characters">http://www.allocine.fr/film/fichefilm_gen_cfilm=232239.html</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>8</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>239324</span>
+        "<span class=sf-dump-key>originalTitle</span>" => "<span class=sf-dump-str title="24 characters">Batman: The Killing Joke</span>"
+        "<span class=sf-dump-key>productionYear</span>" => <span class=sf-dump-num>2016</span>
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="59 characters">http://www.allocine.fr/film/fichefilm_gen_cfilm=239324.html</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>9</span> => <span class=sf-dump-note>array:8</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>11181</span>
+        "<span class=sf-dump-key>originalTitle</span>" => "<span class=sf-dump-str title="14 characters">Batman &amp; Robin</span>"
+        "<span class=sf-dump-key>productionYear</span>" => <span class=sf-dump-num>1997</span>
+        "<span class=sf-dump-key>release</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>releaseDate</span>" => "<span class=sf-dump-str title="10 characters">1997-07-09</span>"
+        </samp>]
+        "<span class=sf-dump-key>castingShort</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>directors</span>" => "<span class=sf-dump-str title="15 characters">Joel Schumacher</span>"
+          "<span class=sf-dump-key>actors</span>" => "<span class=sf-dump-str title="87 characters">George Clooney, Arnold Schwarzenegger, Chris O&#039;Donnell, Uma Thurman, Alicia Silverstone</span>"
+        </samp>]
+        "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>userRating</span>" => <span class=sf-dump-num>1.35992</span>
+        </samp>]
+        "<span class=sf-dump-key>poster</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/65/96/01/18970281.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img2.acsta.net/medias/nmedia/18/65/96/01/18970281.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="58 characters">http://www.allocine.fr/film/fichefilm_gen_cfilm=11181.html</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+    </samp>]
+  </samp>]
+  "<span class=sf-dump-key>movie</span>" => <span class=sf-dump-note>array:34</span> [<samp>
+    "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>11181</span>
+    "<span class=sf-dump-key>movieType</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+      "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>4002</span>
+      "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="12 characters">Long-m&eacute;trage</span>"
+    </samp>]
+    "<span class=sf-dump-key>originalTitle</span>" => "<span class=sf-dump-str title="14 characters">Batman &amp; Robin</span>"
+    "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="14 characters">Batman &amp; Robin</span>"
+    "<span class=sf-dump-key>keywords</span>" => "<span class=sf-dump-str title="33 characters">Batman et Robin Batman and Robin </span>"
+    "<span class=sf-dump-key>productionYear</span>" => <span class=sf-dump-num>1997</span>
+    "<span class=sf-dump-key>nationality</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5004</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="15 characters">Grande-Bretagne</span>"
+      </samp>]
+      <span class=sf-dump-index>1</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5002</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">U.S.A.</span>"
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>genre</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>13025</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Action</span>"
+      </samp>]
+      <span class=sf-dump-index>1</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>13012</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="11 characters">Fantastique</span>"
+      </samp>]
+      <span class=sf-dump-index>2</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>13023</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="8 characters">Thriller</span>"
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>release</span>" => <span class=sf-dump-note>array:4</span> [<samp>
+      "<span class=sf-dump-key>releaseDate</span>" => "<span class=sf-dump-str title="10 characters">1997-07-09</span>"
+      "<span class=sf-dump-key>country</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5001</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">France</span>"
+      </samp>]
+      "<span class=sf-dump-key>releaseState</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>3004</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="15 characters">Sortie en salle</span>"
+      </samp>]
+      "<span class=sf-dump-key>distributor</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>929</span>
+        "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="19 characters">Warner Bros. France</span>"
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>runtime</span>" => <span class=sf-dump-num>7500</span>
+    "<span class=sf-dump-key>color</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+      "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>12001</span>
+      "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">Couleur</span>"
+    </samp>]
+    "<span class=sf-dump-key>formatList</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+      "<span class=sf-dump-key>productionFormat</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+        <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>19002</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">35 mm</span>"
+        </samp>]
+      </samp>]
+      "<span class=sf-dump-key>projectionFormat</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+        <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>20007</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="8 characters">1.85 : 1</span>"
+        </samp>]
+      </samp>]
+      "<span class=sf-dump-key>soundFormat</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+        <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>21005</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="3 characters">DTS</span>"
+        </samp>]
+        <span class=sf-dump-index>1</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>21006</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="4 characters">SDDS</span>"
+        </samp>]
+        <span class=sf-dump-index>2</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>21022</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="13 characters">Dolby Digital</span>"
+        </samp>]
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>language</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>6002</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">Anglais</span>"
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>budget</span>" => "<span class=sf-dump-str title="13 characters">110 000 000 $</span>"
+    "<span class=sf-dump-key>synopsis</span>" => "<span class=sf-dump-str title="368 characters">Dans cette nouvelle aventure, Batman aura bien besoin de son audacieux partenaire Robin, juch&eacute; sur sa fringante moto turbo. En effet, le glacial M. Freeze fait r&eacute;gner une vague de froid polaire sur Gotham City avec la complicit&eacute; de la belle et v&eacute;n&eacute;neuse Poison Ivy, au baiser mortel et aux formes sinueuses, qui r&ecirc;ve de soumettre le monde au pouvoir des femmes-fleurs.</span>"
+    "<span class=sf-dump-key>synopsisShort</span>" => "<span class=sf-dump-str title="135 characters">Dans cette nouvelle aventure, Batman aura bien besoin de son audacieux partenaire Robin pour combattre M.Freeze et la belle Poison Ivy.</span>"
+    "<span class=sf-dump-key>castingShort</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+      "<span class=sf-dump-key>directors</span>" => "<span class=sf-dump-str title="15 characters">Joel Schumacher</span>"
+      "<span class=sf-dump-key>actors</span>" => "<span class=sf-dump-str title="87 characters">George Clooney, Arnold Schwarzenegger, Chris O&#039;Donnell, Uma Thurman, Alicia Silverstone</span>"
+    </samp>]
+    "<span class=sf-dump-key>castMember</span>" => <span class=sf-dump-note>array:41</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>7832</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="15 characters">Joel Schumacher</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8002</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="11 characters">R&eacute;alisateur</span>"
+        </samp>]
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/35/21/52/19510995.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img2.acsta.net/medias/nmedia/18/35/21/52/19510995.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>1</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18069</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="14 characters">George Clooney</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="20 characters">Batman / Bruce Wayne</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="35 characters">/pictures/16/02/09/11/04/148356.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="63 characters">http://fr.web.img1.acsta.net/pictures/16/02/09/11/04/148356.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>2</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>1067</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="21 characters">Arnold Schwarzenegger</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="33 characters">Mr. Freeze / Docteur Victor Fries</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="35 characters">/pictures/15/06/22/14/04/051773.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="63 characters">http://fr.web.img4.acsta.net/pictures/15/06/22/14/04/051773.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>3</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18371</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="15 characters">Chris O&#039;Donnell</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="20 characters">Robin / Dick Grayson</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/35/61/71/19590868.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img2.acsta.net/medias/nmedia/18/35/61/71/19590868.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>4</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>13206</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="11 characters">Uma Thurman</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">Actrice</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="33 characters">Poison Ivy / Docteur Pamela Isley</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/35/20/10/20459231.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img6.acsta.net/medias/nmedia/18/35/20/10/20459231.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>5</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>20033</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="18 characters">Alicia Silverstone</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">Actrice</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="24 characters">Batgirl / Barbara Wilson</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="35 characters">/pictures/15/11/23/09/45/267381.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="63 characters">http://fr.web.img2.acsta.net/pictures/15/11/23/09/45/267381.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>6</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>86025</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="12 characters">Jeep Swenson</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="4 characters">Bane</span>"
+      </samp>]
+      <span class=sf-dump-index>7</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>1234</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="13 characters">Michael Gough</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="17 characters">Alfred Pennyworth</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="48 characters">/pictures/210/126/21012683_20130615091308344.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="76 characters">http://fr.web.img1.acsta.net/pictures/210/126/21012683_20130615091308344.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>8</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>726</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="10 characters">Pat Hingle</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="6 characters">Gordon</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="48 characters">/pictures/210/214/21021421_20130720004008486.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="76 characters">http://fr.web.img2.acsta.net/pictures/210/214/21021421_20130720004008486.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>9</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>6143</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="11 characters">John Glover</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="17 characters">Dr. Jason Woodrue</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/35/78/53/18424572.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img3.acsta.net/medias/nmedia/18/35/78/53/18424572.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>10</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>27018</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="15 characters">Elle MacPherson</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">Actrice</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="13 characters">Julie Madison</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="35 characters">/pictures/14/09/23/12/40/353287.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="63 characters">http://fr.web.img4.acsta.net/pictures/14/09/23/12/40/353287.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>11</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>20203</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="13 characters">Vivica A. Fox</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">Actrice</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="20 characters">Mademoiselle B Haven</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="35 characters">/pictures/15/12/23/12/08/245593.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="63 characters">http://fr.web.img3.acsta.net/pictures/15/12/23/12/08/245593.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>12</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>41675</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="14 characters">Doug Hutchison</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="5 characters">Golum</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="48 characters">/pictures/210/473/21047392_20131007182510425.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="76 characters">http://fr.web.img3.acsta.net/pictures/210/473/21047392_20131007182510425.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>13</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>3808</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="10 characters">Nicky Katt</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="5 characters">Spike</span>"
+      </samp>]
+      <span class=sf-dump-index>14</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>214037</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="26 characters">Vendela Kirsebom Thomessen</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">Actrice</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="10 characters">Nora Fries</span>"
+      </samp>]
+      <span class=sf-dump-index>15</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>89872</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="19 characters">Michael Reid MacKay</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="13 characters">Antonio Diego</span>"
+      </samp>]
+      <span class=sf-dump-index>16</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>118588</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="17 characters">Elizabeth Sanders</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="12 characters">Gossip Gerty</span>"
+      </samp>]
+      <span class=sf-dump-index>17</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>232407</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="13 characters">Patrick Leahy</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="8 characters">Lui-m&ecirc;me</span>"
+      </samp>]
+      <span class=sf-dump-index>18</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>27621</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="6 characters">Coolio</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="11 characters">Le banquier</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="35 characters">/pictures/14/07/01/17/39/130720.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="63 characters">http://fr.web.img2.acsta.net/pictures/14/07/01/17/39/130720.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>19</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>70125</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="17 characters">Michael Paul Chan</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">Acteur</span>"
+        </samp>]
+        "<span class=sf-dump-key>role</span>" => "<span class=sf-dump-str title="33 characters">Le scientifique de l&#039;observatoire</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/64/66/85/19414738.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img5.acsta.net/medias/nmedia/18/64/66/85/19414738.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>20</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>47788</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="21 characters">Mitchell E. Dauterive</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8064</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="18 characters">Producteur associ&eacute;</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>21</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>47789</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="16 characters">William M. Elvin</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8063</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="12 characters">Coproducteur</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>22</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>78764</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="21 characters">Peter MacGregor-Scott</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8029</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="10 characters">Producteur</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>23</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>47791</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="17 characters">Benjamin Melniker</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8062</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="19 characters">Producteur ex&eacute;cutif</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>24</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>47793</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="16 characters">Michael E. Uslan</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8062</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="19 characters">Producteur ex&eacute;cutif</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>25</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>40847</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="14 characters">Akiva Goldsman</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8004</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="10 characters">Sc&eacute;nariste</span>"
+        </samp>]
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="35 characters">/pictures/14/03/12/10/32/385480.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="63 characters">http://fr.web.img1.acsta.net/pictures/14/03/12/10/32/385480.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>26</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>72604</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="8 characters">Bob Kane</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8085</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="19 characters">D&#039;apr&egrave;s l&#039;oeuvre de</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>27</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>39579</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="9 characters">Mali Finn</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8041</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="21 characters">Directrice du casting</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>28</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>78235</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="15 characters">Richard Holland</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8042</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="20 characters">Directeur artistique</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>29</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>519947</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="13 characters">Ingrid Ferrin</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8039</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="10 characters">Costumi&egrave;re</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>30</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>61955</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="13 characters">Geoff Hubbard</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8042</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="20 characters">Directeur artistique</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>31</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>193044</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="16 characters">Robert Turturice</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8039</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="9 characters">Costumier</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>32</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>44983</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="17 characters">Stephen Goldblatt</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8037</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="28 characters">Directeur de la photographie</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>33</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>54408</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="14 characters">Dennis Virkler</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8046</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">Monteur</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>34</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>61642</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="17 characters">Mark Stevens (II)</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8046</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">Monteur</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>35</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>61955</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="13 characters">Geoff Hubbard</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8059</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="15 characters">Chef d&eacute;corateur</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>36</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>38751</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="14 characters">Andrew Adamson</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8060</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="30 characters">Superviseur des effets visuels</span>"
+        </samp>]
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="20 characters">Photo Batman &amp; Robin</span>"
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/35/66/27/19456959.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img4.acsta.net/medias/nmedia/18/35/66/27/19456959.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>37</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>131275</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="12 characters">Matt Sweeney</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8048</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="15 characters">Effets sp&eacute;ciaux</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>38</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>415812</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="13 characters">St&eacute;phane Naz&eacute;</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8118</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="9 characters">Animateur</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>39</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>45613</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="17 characters">Elliot Goldenthal</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8003</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="11 characters">Compositeur</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>40</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>person</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>47800</span>
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="12 characters">Billy Corgan</span>"
+        </samp>]
+        "<span class=sf-dump-key>activity</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>8003</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="11 characters">Compositeur</span>"
+        </samp>]
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>poster</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+      "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="22 characters">Affiche Batman &amp; Robin</span>"
+      "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img2.acsta.net/medias/nmedia/18/65/96/01/18970281.jpg</span>"
+    </samp>]
+    "<span class=sf-dump-key>trailer</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+      "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="28 characters">Bande-Annonce Batman &amp; Robin</span>"
+      "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>19453918</span>
+      "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="42 characters">http://www.allocine.fr/blogvision/19453918</span>"
+    </samp>]
+    "<span class=sf-dump-key>trailerEmbed</span>" => "<span class=sf-dump-str title="311 characters">&lt;div id=&#039;ACEmbed&#039;&gt;&lt;iframe src=&#039;http://www.allocine.fr/_video/iblogvision.aspx?cmedia=19453918&amp;amp;isApp=true&#039; style=&#039;width:480px; height:270px&#039; frameborder=&#039;0&#039; allowfullscreen=&#039;true&#039;&gt;&lt;/iframe&gt;&lt;br /&gt;&lt;a href=&quot;http://www.allocine.fr/film/fichefilm_gen_cfilm=11181.html&quot; target=&quot;_blank&quot;&gt;Batman &amp;amp; Robin&lt;/a&gt;&lt;/div&gt;</span>"
+    "<span class=sf-dump-key>hasVOD</span>" => <span class=sf-dump-num>1</span>
+    "<span class=sf-dump-key>hasBluRay</span>" => <span class=sf-dump-num>1</span>
+    "<span class=sf-dump-key>hasDVD</span>" => <span class=sf-dump-num>1</span>
+    "<span class=sf-dump-key>dvdReleaseDate</span>" => "<span class=sf-dump-str title="10 characters">1998-04-21</span>"
+    "<span class=sf-dump-key>bluRayReleaseDate</span>" => "<span class=sf-dump-str title="10 characters">2009-03-04</span>"
+    "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:9</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+        "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="14 characters">Batman &amp; Robin</span>"
+        "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="58 characters">http://www.allocine.fr/film/fichefilm_gen_cfilm=11181.html</span>"
+      </samp>]
+      <span class=sf-dump-index>1</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="15 characters">aco:web_casting</span>"
+        "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="22 characters">Casting Batman &amp; Robin</span>"
+        "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="52 characters">http://www.allocine.fr/film/fichefilm-11181/casting/</span>"
+      </samp>]
+      <span class=sf-dump-index>2</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="14 characters">aco:web_trivia</span>"
+        "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="24 characters">Anecdotes Batman &amp; Robin</span>"
+        "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="61 characters">http://www.allocine.fr/film/fichefilm-11181/secrets-tournage/</span>"
+      </samp>]
+      <span class=sf-dump-index>3</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="17 characters">aco:web_showtimes</span>"
+        "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="22 characters">S&eacute;ances Batman &amp; Robin</span>"
+        "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="41 characters">http://www.allocine.fr/seance/film-11181/</span>"
+      </samp>]
+      <span class=sf-dump-index>4</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="21 characters">aco:web_publicreviews</span>"
+        "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="36 characters">Critiques Spectateurs Batman &amp; Robin</span>"
+        "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="66 characters">http://www.allocine.fr/film/fichefilm-11181/critiques/spectateurs/</span>"
+      </samp>]
+      <span class=sf-dump-index>5</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="20 characters">aco:web_pressreviews</span>"
+        "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="31 characters">Critiques presse Batman &amp; Robin</span>"
+        "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="61 characters">http://www.allocine.fr/film/fichefilm-11181/critiques/presse/</span>"
+      </samp>]
+      <span class=sf-dump-index>6</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="13 characters">aco:web_shots</span>"
+        "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="21 characters">Photos Batman &amp; Robin</span>"
+        "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="51 characters">http://www.allocine.fr/film/fichefilm-11181/photos/</span>"
+      </samp>]
+      <span class=sf-dump-index>7</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="16 characters">aco:web_trailers</span>"
+        "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="30 characters">Bandes annonces Batman &amp; Robin</span>"
+        "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="53 characters">http://www.allocine.fr/videos/fichefilm-11181/toutes/</span>"
+      </samp>]
+      <span class=sf-dump-index>8</span> => <span class=sf-dump-note>array:3</span> [<samp>
+        "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="16 characters">aco:web_products</span>"
+        "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="14 characters">Batman &amp; Robin</span>"
+        "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="52 characters">http://www.allocine.fr/film/fichefilm-11181/vod-dvd/</span>"
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>media</span>" => <span class=sf-dump-note>array:14</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:9</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="7 characters">picture</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18827277</span>
+        "<span class=sf-dump-key>rcode</span>" => <span class=sf-dump-num>18970281</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31001</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">Affiche</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="24 characters">Batman &amp; Robin : Affiche</span>"
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/65/96/01/18970281.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img2.acsta.net/medias/nmedia/18/65/96/01/18970281.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>width</span>" => <span class=sf-dump-num>120</span>
+        "<span class=sf-dump-key>height</span>" => <span class=sf-dump-num>160</span>
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="78 characters">http://www.allocine.fr/film/fichefilm-11181/photos/detail/?cmediafile=18970281</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>1</span> => <span class=sf-dump-note>array:11</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="7 characters">picture</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18797715</span>
+        "<span class=sf-dump-key>rcode</span>" => <span class=sf-dump-num>18899566</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31006</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">Photo</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="54 characters">Batman &amp; Robin : photo George Clooney, Joel Schumacher</span>"
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/65/96/01/18899566.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img6.acsta.net/medias/nmedia/18/65/96/01/18899566.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>description</span>" => "<span class=sf-dump-str title="14 characters">George Clooney</span>"
+        "<span class=sf-dump-key>width</span>" => <span class=sf-dump-num>454</span>
+        "<span class=sf-dump-key>height</span>" => <span class=sf-dump-num>602</span>
+        "<span class=sf-dump-key>copyrightHolder</span>" => "<span class=sf-dump-str title="4 characters">D.R.</span>"
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="78 characters">http://www.allocine.fr/film/fichefilm-11181/photos/detail/?cmediafile=18899566</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>2</span> => <span class=sf-dump-note>array:11</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="7 characters">picture</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18797714</span>
+        "<span class=sf-dump-key>rcode</span>" => <span class=sf-dump-num>18899565</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31006</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">Photo</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="38 characters">Batman &amp; Robin : photo Joel Schumacher</span>"
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/65/96/01/18899565.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img5.acsta.net/medias/nmedia/18/65/96/01/18899565.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>description</span>" => "<span class=sf-dump-str title="21 characters">Arnold Schwarzenegger</span>"
+        "<span class=sf-dump-key>width</span>" => <span class=sf-dump-num>454</span>
+        "<span class=sf-dump-key>height</span>" => <span class=sf-dump-num>682</span>
+        "<span class=sf-dump-key>copyrightHolder</span>" => "<span class=sf-dump-str title="4 characters">D.R.</span>"
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="78 characters">http://www.allocine.fr/film/fichefilm-11181/photos/detail/?cmediafile=18899565</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>3</span> => <span class=sf-dump-note>array:11</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="7 characters">picture</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18797713</span>
+        "<span class=sf-dump-key>rcode</span>" => <span class=sf-dump-num>18899564</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31006</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">Photo</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="51 characters">Batman &amp; Robin : photo Joel Schumacher, Uma Thurman</span>"
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/65/96/01/18899564.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img4.acsta.net/medias/nmedia/18/65/96/01/18899564.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>description</span>" => "<span class=sf-dump-str title="36 characters">Uma Thurman et Arnold Schwarzenegger</span>"
+        "<span class=sf-dump-key>width</span>" => <span class=sf-dump-num>454</span>
+        "<span class=sf-dump-key>height</span>" => <span class=sf-dump-num>636</span>
+        "<span class=sf-dump-key>copyrightHolder</span>" => "<span class=sf-dump-str title="4 characters">D.R.</span>"
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="78 characters">http://www.allocine.fr/film/fichefilm-11181/photos/detail/?cmediafile=18899564</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>4</span> => <span class=sf-dump-note>array:11</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="7 characters">picture</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18797712</span>
+        "<span class=sf-dump-key>rcode</span>" => <span class=sf-dump-num>18899563</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31006</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">Photo</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="38 characters">Batman &amp; Robin : photo Joel Schumacher</span>"
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/65/96/01/18899563.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img3.acsta.net/medias/nmedia/18/65/96/01/18899563.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>description</span>" => "<span class=sf-dump-str title="11 characters">Uma Thurman</span>"
+        "<span class=sf-dump-key>width</span>" => <span class=sf-dump-num>454</span>
+        "<span class=sf-dump-key>height</span>" => <span class=sf-dump-num>636</span>
+        "<span class=sf-dump-key>copyrightHolder</span>" => "<span class=sf-dump-str title="4 characters">D.R.</span>"
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="78 characters">http://www.allocine.fr/film/fichefilm-11181/photos/detail/?cmediafile=18899563</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>5</span> => <span class=sf-dump-note>array:11</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="7 characters">picture</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18797711</span>
+        "<span class=sf-dump-key>rcode</span>" => <span class=sf-dump-num>18899562</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31006</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">Photo</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="38 characters">Batman &amp; Robin : photo Joel Schumacher</span>"
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/65/96/01/18899562.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img2.acsta.net/medias/nmedia/18/65/96/01/18899562.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>description</span>" => "<span class=sf-dump-str title="21 characters">Arnold Schwarzenegger</span>"
+        "<span class=sf-dump-key>width</span>" => <span class=sf-dump-num>454</span>
+        "<span class=sf-dump-key>height</span>" => <span class=sf-dump-num>611</span>
+        "<span class=sf-dump-key>copyrightHolder</span>" => "<span class=sf-dump-str title="4 characters">D.R.</span>"
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="78 characters">http://www.allocine.fr/film/fichefilm-11181/photos/detail/?cmediafile=18899562</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>6</span> => <span class=sf-dump-note>array:11</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="7 characters">picture</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18797710</span>
+        "<span class=sf-dump-key>rcode</span>" => <span class=sf-dump-num>18899561</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31006</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">Photo</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="89 characters">Batman &amp; Robin : photo Arnold Schwarzenegger, Joel Schumacher, Vendela Kirsebom Thomessen</span>"
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/65/96/01/18899561.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img1.acsta.net/medias/nmedia/18/65/96/01/18899561.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>description</span>" => "<span class=sf-dump-str title="51 characters">Arnold Schwarzenegger et Vendela Kirsebom Thomessen</span>"
+        "<span class=sf-dump-key>width</span>" => <span class=sf-dump-num>454</span>
+        "<span class=sf-dump-key>height</span>" => <span class=sf-dump-num>648</span>
+        "<span class=sf-dump-key>copyrightHolder</span>" => "<span class=sf-dump-str title="4 characters">D.R.</span>"
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="78 characters">http://www.allocine.fr/film/fichefilm-11181/photos/detail/?cmediafile=18899561</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>7</span> => <span class=sf-dump-note>array:11</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="7 characters">picture</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18797706</span>
+        "<span class=sf-dump-key>rcode</span>" => <span class=sf-dump-num>18899551</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31006</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">Photo</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="91 characters">Batman &amp; Robin : photo Alicia Silverstone, Chris O&#039;Donnell, George Clooney, Joel Schumacher</span>"
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/65/96/01/18899551.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img6.acsta.net/medias/nmedia/18/65/96/01/18899551.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>description</span>" => "<span class=sf-dump-str title="53 characters">Alicia Silverstone, George Clooney et Chris O&#039;Donnell</span>"
+        "<span class=sf-dump-key>width</span>" => <span class=sf-dump-num>454</span>
+        "<span class=sf-dump-key>height</span>" => <span class=sf-dump-num>319</span>
+        "<span class=sf-dump-key>copyrightHolder</span>" => "<span class=sf-dump-str title="4 characters">D.R.</span>"
+        "<span class=sf-dump-key>link</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>rel</span>" => "<span class=sf-dump-str title="7 characters">aco:web</span>"
+            "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="78 characters">http://www.allocine.fr/film/fichefilm-11181/photos/detail/?cmediafile=18899551</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>8</span> => <span class=sf-dump-note>array:9</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="5 characters">video</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>19453918</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31003</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="13 characters">Bande-annonce</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="31 characters">Batman &amp; Robin Bande-annonce VO</span>"
+        "<span class=sf-dump-key>version</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>6002</span>
+          "<span class=sf-dump-key>original</span>" => <span class=sf-dump-num>1</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">Anglais</span>"
+        </samp>]
+        "<span class=sf-dump-key>runtime</span>" => <span class=sf-dump-num>143</span>
+        "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>commentCount</span>" => <span class=sf-dump-num>0</span>
+          "<span class=sf-dump-key>viewCount</span>" => <span class=sf-dump-num>12233</span>
+        </samp>]
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="42 characters">/videothumbnails/15/11/27/17/12/478107.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="70 characters">http://fr.web.img2.acsta.net/videothumbnails/15/11/27/17/12/478107.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>trailerEmbed</span>" => "<span class=sf-dump-str title="198 characters">&lt;div id=&#039;ACEmbed&#039;&gt;&lt;iframe src=&#039;http://www.allocine.fr/_video/iblogvision.aspx?cmedia=19453918&amp;amp;isApp=true&#039; style=&#039;width:480px; height:270px&#039; frameborder=&#039;0&#039; allowfullscreen=&#039;true&#039;&gt;&lt;/iframe&gt;&lt;/div&gt;</span>"
+      </samp>]
+      <span class=sf-dump-index>9</span> => <span class=sf-dump-note>array:11</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="5 characters">video</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>19544639</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31004</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="13 characters">Extrait vid&eacute;o</span>"
+        </samp>]
+        "<span class=sf-dump-key>acShow</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>0</span>
+          "<span class=sf-dump-key>nameShort</span>" => "<span class=sf-dump-str title="11 characters">allocinezap</span>"
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="12 characters">AlloCin&eacute; Zap</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="54 characters">Un court m&eacute;trage d&#039;animation pour les 75 ans de Batman</span>"
+        "<span class=sf-dump-key>titleShort</span>" => "<span class=sf-dump-str title="54 characters">Un court m&eacute;trage d&#039;animation pour les 75 ans de Batman</span>"
+        "<span class=sf-dump-key>version</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>6002</span>
+          "<span class=sf-dump-key>original</span>" => <span class=sf-dump-num>0</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">Anglais</span>"
+        </samp>]
+        "<span class=sf-dump-key>runtime</span>" => <span class=sf-dump-num>173</span>
+        "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>commentCount</span>" => <span class=sf-dump-num>5</span>
+          "<span class=sf-dump-key>viewCount</span>" => <span class=sf-dump-num>350932</span>
+        </samp>]
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="42 characters">/videothumbnails/14/04/11/12/18/414242.png</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="70 characters">http://fr.web.img3.acsta.net/videothumbnails/14/04/11/12/18/414242.png</span>"
+        </samp>]
+        "<span class=sf-dump-key>trailerEmbed</span>" => "<span class=sf-dump-str title="198 characters">&lt;div id=&#039;ACEmbed&#039;&gt;&lt;iframe src=&#039;http://www.allocine.fr/_video/iblogvision.aspx?cmedia=19544639&amp;amp;isApp=true&#039; style=&#039;width:480px; height:270px&#039; frameborder=&#039;0&#039; allowfullscreen=&#039;true&#039;&gt;&lt;/iframe&gt;&lt;/div&gt;</span>"
+      </samp>]
+      <span class=sf-dump-index>10</span> => <span class=sf-dump-note>array:11</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="5 characters">video</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>19454576</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31011</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="24 characters">Emission d&#039;actu ou bonus</span>"
+        </samp>]
+        "<span class=sf-dump-key>acShow</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18937609</span>
+          "<span class=sf-dump-key>nameShort</span>" => "<span class=sf-dump-str title="4 characters">top5</span>"
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">Top 5</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="27 characters">Top 5 N&deg;52 - Les casseroles</span>"
+        "<span class=sf-dump-key>titleShort</span>" => "<span class=sf-dump-str title="14 characters">Les casseroles</span>"
+        "<span class=sf-dump-key>version</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>6001</span>
+          "<span class=sf-dump-key>original</span>" => <span class=sf-dump-num>0</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="8 characters">Fran&ccedil;ais</span>"
+        </samp>]
+        "<span class=sf-dump-key>runtime</span>" => <span class=sf-dump-num>163</span>
+        "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>commentCount</span>" => <span class=sf-dump-num>32</span>
+          "<span class=sf-dump-key>viewCount</span>" => <span class=sf-dump-num>41268</span>
+        </samp>]
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="59 characters">/medias/nmedia//18/93/76/09/19454576_top5_2013_01_03_-_.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="87 characters">http://fr.web.img4.acsta.net/medias/nmedia//18/93/76/09/19454576_top5_2013_01_03_-_.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>trailerEmbed</span>" => "<span class=sf-dump-str title="198 characters">&lt;div id=&#039;ACEmbed&#039;&gt;&lt;iframe src=&#039;http://www.allocine.fr/_video/iblogvision.aspx?cmedia=19454576&amp;amp;isApp=true&#039; style=&#039;width:480px; height:270px&#039; frameborder=&#039;0&#039; allowfullscreen=&#039;true&#039;&gt;&lt;/iframe&gt;&lt;/div&gt;</span>"
+      </samp>]
+      <span class=sf-dump-index>11</span> => <span class=sf-dump-note>array:11</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="5 characters">video</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>19458960</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31011</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="24 characters">Emission d&#039;actu ou bonus</span>"
+        </samp>]
+        "<span class=sf-dump-key>acShow</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18937609</span>
+          "<span class=sf-dump-key>nameShort</span>" => "<span class=sf-dump-str title="4 characters">top5</span>"
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">Top 5</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="32 characters">Top 5 N&deg;66 - Les looks interdits</span>"
+        "<span class=sf-dump-key>titleShort</span>" => "<span class=sf-dump-str title="19 characters">Les looks interdits</span>"
+        "<span class=sf-dump-key>version</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>6001</span>
+          "<span class=sf-dump-key>original</span>" => <span class=sf-dump-num>0</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="8 characters">Fran&ccedil;ais</span>"
+        </samp>]
+        "<span class=sf-dump-key>runtime</span>" => <span class=sf-dump-num>121</span>
+        "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>commentCount</span>" => <span class=sf-dump-num>31</span>
+          "<span class=sf-dump-key>viewCount</span>" => <span class=sf-dump-num>32810</span>
+        </samp>]
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="55 characters">/medias/nmedia/18/93/76/09/19458960_top5_2013_01_23.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="83 characters">http://fr.web.img1.acsta.net/medias/nmedia/18/93/76/09/19458960_top5_2013_01_23.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>trailerEmbed</span>" => "<span class=sf-dump-str title="198 characters">&lt;div id=&#039;ACEmbed&#039;&gt;&lt;iframe src=&#039;http://www.allocine.fr/_video/iblogvision.aspx?cmedia=19458960&amp;amp;isApp=true&#039; style=&#039;width:480px; height:270px&#039; frameborder=&#039;0&#039; allowfullscreen=&#039;true&#039;&gt;&lt;/iframe&gt;&lt;/div&gt;</span>"
+      </samp>]
+      <span class=sf-dump-index>12</span> => <span class=sf-dump-note>array:11</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="5 characters">video</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>19552126</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31011</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="24 characters">Emission d&#039;actu ou bonus</span>"
+        </samp>]
+        "<span class=sf-dump-key>acShow</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18937609</span>
+          "<span class=sf-dump-key>nameShort</span>" => "<span class=sf-dump-str title="4 characters">top5</span>"
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">Top 5</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="66 characters">Top 5 N&deg;578 - Les moments o&ugrave; les super-h&eacute;ros se mettent en costume</span>"
+        "<span class=sf-dump-key>titleShort</span>" => "<span class=sf-dump-str title="52 characters">Les moments o&ugrave; les super-h&eacute;ros se mettent en costume</span>"
+        "<span class=sf-dump-key>version</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>6001</span>
+          "<span class=sf-dump-key>original</span>" => <span class=sf-dump-num>0</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="8 characters">Fran&ccedil;ais</span>"
+        </samp>]
+        "<span class=sf-dump-key>runtime</span>" => <span class=sf-dump-num>169</span>
+        "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>commentCount</span>" => <span class=sf-dump-num>46</span>
+          "<span class=sf-dump-key>viewCount</span>" => <span class=sf-dump-num>29941</span>
+        </samp>]
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="42 characters">/videothumbnails/15/03/18/12/58/052883.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="70 characters">http://fr.web.img1.acsta.net/videothumbnails/15/03/18/12/58/052883.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>trailerEmbed</span>" => "<span class=sf-dump-str title="198 characters">&lt;div id=&#039;ACEmbed&#039;&gt;&lt;iframe src=&#039;http://www.allocine.fr/_video/iblogvision.aspx?cmedia=19552126&amp;amp;isApp=true&#039; style=&#039;width:480px; height:270px&#039; frameborder=&#039;0&#039; allowfullscreen=&#039;true&#039;&gt;&lt;/iframe&gt;&lt;/div&gt;</span>"
+      </samp>]
+      <span class=sf-dump-index>13</span> => <span class=sf-dump-note>array:11</span> [<samp>
+        "<span class=sf-dump-key>class</span>" => "<span class=sf-dump-str title="5 characters">video</span>"
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>19558405</span>
+        "<span class=sf-dump-key>type</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>31011</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="24 characters">Emission d&#039;actu ou bonus</span>"
+        </samp>]
+        "<span class=sf-dump-key>acShow</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18937609</span>
+          "<span class=sf-dump-key>nameShort</span>" => "<span class=sf-dump-str title="4 characters">top5</span>"
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">Top 5</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="43 characters">Top 5 N&deg;656 - Les (super)h&eacute;ros pas discrets</span>"
+        "<span class=sf-dump-key>titleShort</span>" => "<span class=sf-dump-str title="29 characters">Les (super)h&eacute;ros pas discrets</span>"
+        "<span class=sf-dump-key>version</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>6001</span>
+          "<span class=sf-dump-key>original</span>" => <span class=sf-dump-num>0</span>
+          "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="8 characters">Fran&ccedil;ais</span>"
+        </samp>]
+        "<span class=sf-dump-key>runtime</span>" => <span class=sf-dump-num>165</span>
+        "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>commentCount</span>" => <span class=sf-dump-num>0</span>
+          "<span class=sf-dump-key>viewCount</span>" => <span class=sf-dump-num>30077</span>
+        </samp>]
+        "<span class=sf-dump-key>thumbnail</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="42 characters">/videothumbnails/15/10/23/18/18/471407.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="70 characters">http://fr.web.img6.acsta.net/videothumbnails/15/10/23/18/18/471407.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>trailerEmbed</span>" => "<span class=sf-dump-str title="198 characters">&lt;div id=&#039;ACEmbed&#039;&gt;&lt;iframe src=&#039;http://www.allocine.fr/_video/iblogvision.aspx?cmedia=19558405&amp;amp;isApp=true&#039; style=&#039;width:480px; height:270px&#039; frameborder=&#039;0&#039; allowfullscreen=&#039;true&#039;&gt;&lt;/iframe&gt;&lt;/div&gt;</span>"
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>statistics</span>" => <span class=sf-dump-note>array:18</span> [<samp>
+      "<span class=sf-dump-key>userRating</span>" => <span class=sf-dump-num>1.35991836</span>
+      "<span class=sf-dump-key>userReviewCount</span>" => <span class=sf-dump-num>808</span>
+      "<span class=sf-dump-key>userRatingCount</span>" => <span class=sf-dump-num>10204</span>
+      "<span class=sf-dump-key>editorialRatingCount</span>" => <span class=sf-dump-num>0</span>
+      "<span class=sf-dump-key>commentCount</span>" => <span class=sf-dump-num>297</span>
+      "<span class=sf-dump-key>photoCount</span>" => <span class=sf-dump-num>8</span>
+      "<span class=sf-dump-key>videoCount</span>" => <span class=sf-dump-num>6</span>
+      "<span class=sf-dump-key>triviaCount</span>" => <span class=sf-dump-num>0</span>
+      "<span class=sf-dump-key>newsCount</span>" => <span class=sf-dump-num>20</span>
+      "<span class=sf-dump-key>rankTopMovie</span>" => <span class=sf-dump-num>4775</span>
+      "<span class=sf-dump-key>variationTopMovie</span>" => <span class=sf-dump-num>-1272</span>
+      "<span class=sf-dump-key>awardCount</span>" => <span class=sf-dump-num>0</span>
+      "<span class=sf-dump-key>nominationCount</span>" => <span class=sf-dump-num>0</span>
+      "<span class=sf-dump-key>rating</span>" => <span class=sf-dump-note>array:10</span> [<samp>
+        <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>note</span>" => <span class=sf-dump-num>5.0</span>
+          "<span class=sf-dump-key>$</span>" => <span class=sf-dump-num>44</span>
+        </samp>]
+        <span class=sf-dump-index>1</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>note</span>" => <span class=sf-dump-num>4.5</span>
+          "<span class=sf-dump-key>$</span>" => <span class=sf-dump-num>10</span>
+        </samp>]
+        <span class=sf-dump-index>2</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>note</span>" => <span class=sf-dump-num>4.0</span>
+          "<span class=sf-dump-key>$</span>" => <span class=sf-dump-num>16</span>
+        </samp>]
+        <span class=sf-dump-index>3</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>note</span>" => <span class=sf-dump-num>3.5</span>
+          "<span class=sf-dump-key>$</span>" => <span class=sf-dump-num>13</span>
+        </samp>]
+        <span class=sf-dump-index>4</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>note</span>" => <span class=sf-dump-num>3.0</span>
+          "<span class=sf-dump-key>$</span>" => <span class=sf-dump-num>24</span>
+        </samp>]
+        <span class=sf-dump-index>5</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>note</span>" => <span class=sf-dump-num>2.5</span>
+          "<span class=sf-dump-key>$</span>" => <span class=sf-dump-num>51</span>
+        </samp>]
+        <span class=sf-dump-index>6</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>note</span>" => <span class=sf-dump-num>2.0</span>
+          "<span class=sf-dump-key>$</span>" => <span class=sf-dump-num>41</span>
+        </samp>]
+        <span class=sf-dump-index>7</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>note</span>" => <span class=sf-dump-num>1.5</span>
+          "<span class=sf-dump-key>$</span>" => <span class=sf-dump-num>40</span>
+        </samp>]
+        <span class=sf-dump-index>8</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>note</span>" => <span class=sf-dump-num>1.0</span>
+          "<span class=sf-dump-key>$</span>" => <span class=sf-dump-num>192</span>
+        </samp>]
+        <span class=sf-dump-index>9</span> => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>note</span>" => <span class=sf-dump-num>0.5</span>
+          "<span class=sf-dump-key>$</span>" => <span class=sf-dump-num>373</span>
+        </samp>]
+      </samp>]
+      "<span class=sf-dump-key>fanCount</span>" => <span class=sf-dump-num>430</span>
+      "<span class=sf-dump-key>wantToSeeCount</span>" => <span class=sf-dump-num>423</span>
+      "<span class=sf-dump-key>releaseWeekPosition</span>" => <span class=sf-dump-num>-974</span>
+      "<span class=sf-dump-key>admissionCount</span>" => <span class=sf-dump-num>1354790</span>
+    </samp>]
+    "<span class=sf-dump-key>news</span>" => <span class=sf-dump-note>array:4</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:7</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18648741</span>
+        "<span class=sf-dump-key>publication</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>dateStart</span>" => "<span class=sf-dump-str title="19 characters">2015-11-30T19:00:00</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="51 characters">10 films qui ont ruin&eacute; la carri&egrave;re de leurs acteurs</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="33 characters">/newsv7/15/11/27/15/33/253082.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="61 characters">http://fr.web.img2.acsta.net/newsv7/15/11/27/15/33/253082.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>displayMode</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>117001</span>
+        </samp>]
+        "<span class=sf-dump-key>pageCount</span>" => <span class=sf-dump-num>11</span>
+        "<span class=sf-dump-key>category</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>23218</span>
+            "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="12 characters">Culture cin&eacute;</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>1</span> => <span class=sf-dump-note>array:7</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18647898</span>
+        "<span class=sf-dump-key>publication</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>dateStart</span>" => "<span class=sf-dump-str title="19 characters">2015-11-04T12:00:00</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="71 characters">5 (super)h&eacute;ros tr&egrave;s faciles &agrave; reconna&icirc;tre, m&ecirc;me derri&egrave;re leur masque...</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="33 characters">/newsv7/15/10/23/18/24/208720.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="61 characters">http://fr.web.img5.acsta.net/newsv7/15/10/23/18/24/208720.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>displayMode</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>117001</span>
+        </samp>]
+        "<span class=sf-dump-key>pageCount</span>" => <span class=sf-dump-num>1</span>
+        "<span class=sf-dump-key>category</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>23218</span>
+            "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="12 characters">Culture cin&eacute;</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>2</span> => <span class=sf-dump-note>array:7</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18633935</span>
+        "<span class=sf-dump-key>publication</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>dateStart</span>" => "<span class=sf-dump-str title="19 characters">2015-04-21T20:00:00</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="58 characters">Batman : red&eacute;couvrez tous les costumes du Chevalier Noir !</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="33 characters">/newsv7/14/05/13/19/25/439222.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="61 characters">http://fr.web.img6.acsta.net/newsv7/14/05/13/19/25/439222.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>displayMode</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>117001</span>
+        </samp>]
+        "<span class=sf-dump-key>pageCount</span>" => <span class=sf-dump-num>9</span>
+        "<span class=sf-dump-key>category</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>23218</span>
+            "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="12 characters">Culture cin&eacute;</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>3</span> => <span class=sf-dump-note>array:7</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18640516</span>
+        "<span class=sf-dump-key>publication</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>dateStart</span>" => "<span class=sf-dump-str title="19 characters">2015-03-25T12:00:00</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="53 characters">Quand les super-h&eacute;ros se mettent en costume ! [TOP 5]</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="33 characters">/newsv7/15/03/18/13/07/044180.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="61 characters">http://fr.web.img5.acsta.net/newsv7/15/03/18/13/07/044180.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>displayMode</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>117001</span>
+        </samp>]
+        "<span class=sf-dump-key>pageCount</span>" => <span class=sf-dump-num>1</span>
+        "<span class=sf-dump-key>category</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+            "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>23218</span>
+            "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="12 characters">Culture cin&eacute;</span>"
+          </samp>]
+        </samp>]
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>feature</span>" => <span class=sf-dump-note>array:4</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18591921</span>
+        "<span class=sf-dump-key>publication</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>dateStart</span>" => "<span class=sf-dump-str title="19 characters">2012-11-04T05:00:00</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="22 characters">Sagas : 44 &eacute;pisodes IV</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/93/74/02/20274616.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img4.acsta.net/medias/nmedia/18/93/74/02/20274616.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>1</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18591807</span>
+        "<span class=sf-dump-key>publication</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>dateStart</span>" => "<span class=sf-dump-str title="19 characters">2012-04-12T05:00:00</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="77 characters">&quot;Silence, on... vote sur AlloCin&eacute; !&quot; - Les &eacute;lections cin&eacute;ma/s&eacute;ries (1er tour)</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/90/06/55/20081044.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img1.acsta.net/medias/nmedia/18/90/06/55/20081044.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>2</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18477750</span>
+        "<span class=sf-dump-key>publication</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>dateStart</span>" => "<span class=sf-dump-str title="19 characters">2012-04-04T05:00:00</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="59 characters">Lords of the Ring : ces stars du catch pass&eacute;es au cin&eacute;ma...</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/89/96/79/20074922.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img1.acsta.net/medias/nmedia/18/89/96/79/20074922.jpg</span>"
+        </samp>]
+      </samp>]
+      <span class=sf-dump-index>3</span> => <span class=sf-dump-note>array:4</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>18591672</span>
+        "<span class=sf-dump-key>publication</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+          "<span class=sf-dump-key>dateStart</span>" => "<span class=sf-dump-str title="19 characters">2011-05-27T05:00:00</span>"
+        </samp>]
+        "<span class=sf-dump-key>title</span>" => "<span class=sf-dump-str title="20 characters">25 personnages bleus</span>"
+        "<span class=sf-dump-key>picture</span>" => <span class=sf-dump-note>array:2</span> [<samp>
+          "<span class=sf-dump-key>path</span>" => "<span class=sf-dump-str title="39 characters">/medias/nmedia/18/84/39/22/19738372.jpg</span>"
+          "<span class=sf-dump-key>href</span>" => "<span class=sf-dump-str title="67 characters">http://fr.web.img1.acsta.net/medias/nmedia/18/84/39/22/19738372.jpg</span>"
+        </samp>]
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>tag</span>" => <span class=sf-dump-note>array:24</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>668</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="16 characters">adaptation de bd</span>"
+      </samp>]
+      <span class=sf-dump-index>1</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5104</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="24 characters">adaptation de comic-book</span>"
+      </samp>]
+      <span class=sf-dump-index>2</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>108</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="34 characters">adaptation de comic-book DC Comics</span>"
+      </samp>]
+      <span class=sf-dump-index>3</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5105</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="31 characters">adaptation de comic-book Marvel</span>"
+      </samp>]
+      <span class=sf-dump-index>4</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5324</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="10 characters">Adr&eacute;naline</span>"
+      </samp>]
+      <span class=sf-dump-index>5</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>4268</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="14 characters">All Star Movie</span>"
+      </samp>]
+      <span class=sf-dump-index>6</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>1827</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="6 characters">armure</span>"
+      </samp>]
+      <span class=sf-dump-index>7</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>1316</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="24 characters">Batman Burton/Schumacher</span>"
+      </samp>]
+      <span class=sf-dump-index>8</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5128</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="4 characters">cape</span>"
+      </samp>]
+      <span class=sf-dump-index>9</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5145</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="15 characters">double identit&eacute;</span>"
+      </samp>]
+      <span class=sf-dump-index>10</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5267</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="7 characters">famille</span>"
+      </samp>]
+      <span class=sf-dump-index>11</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>920</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="10 characters">Film culte</span>"
+      </samp>]
+      <span class=sf-dump-index>12</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5271</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="4 characters">geek</span>"
+      </samp>]
+      <span class=sf-dump-index>13</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5190</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="27 characters">millionnaire / milliardaire</span>"
+      </samp>]
+      <span class=sf-dump-index>14</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>1441</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="16 characters">Monde de la nuit</span>"
+      </samp>]
+      <span class=sf-dump-index>15</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>1938</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="21 characters">Neige - froid - hiver</span>"
+      </samp>]
+      <span class=sf-dump-index>16</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>2125</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="26 characters">Plantes - arbres et fleurs</span>"
+      </samp>]
+      <span class=sf-dump-index>17</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>2639</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="20 characters">poison / empoisonner</span>"
+      </samp>]
+      <span class=sf-dump-index>18</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>336</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="20 characters">poursuite en voiture</span>"
+      </samp>]
+      <span class=sf-dump-index>19</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5629</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="5 characters">Robin</span>"
+      </samp>]
+      <span class=sf-dump-index>20</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>4321</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="10 characters">Sex Symbol</span>"
+      </samp>]
+      <span class=sf-dump-index>21</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>2512</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="14 characters">suite / sequel</span>"
+      </samp>]
+      <span class=sf-dump-index>22</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>5238</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="27 characters">super-h&eacute;ros / super-h&eacute;ro&iuml;ne</span>"
+      </samp>]
+      <span class=sf-dump-index>23</span> => <span class=sf-dump-note>array:2</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>4992</span>
+        "<span class=sf-dump-key>$</span>" => "<span class=sf-dump-str title="13 characters">ville fictive</span>"
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>helpfulPositiveReview</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:6</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>35348814</span>
+        "<span class=sf-dump-key>opinion</span>" => <span class=sf-dump-num>35348814</span>
+        "<span class=sf-dump-key>creationDate</span>" => "<span class=sf-dump-str title="20 characters">2013-02-03T16:13:00Z</span>"
+        "<span class=sf-dump-key>writer</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => "<span class=sf-dump-str title="24 characters">Z20110430171741430704745</span>"
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="7 characters">wallpie</span>"
+          "<span class=sf-dump-key>avatar</span>" => "<span class=sf-dump-str title="90 characters">http://fr.web.img5.acsta.net/avatar/FR/5/4/7/Z20110430171741430704745/img/mtkvzvnu.hzz.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>body</span>" => "<span class=sf-dump-str title="241 characters">Ce film est un chef d&#039;oeuvre ! Le jeu d&#039;acteur est &eacute;poustouflant ! Les effets sp&eacute;ciaux sont juste incroyable et le film a un sc&eacute;nario en b&eacute;ton ! Si vous voulez vraiment &ecirc;tre d&eacute;gout&eacute; de Batman et de son univers je vous le conseille vivement !</span>"
+        "<span class=sf-dump-key>rating</span>" => <span class=sf-dump-num>5</span>
+      </samp>]
+    </samp>]
+    "<span class=sf-dump-key>helpfulNegativeReview</span>" => <span class=sf-dump-note>array:1</span> [<samp>
+      <span class=sf-dump-index>0</span> => <span class=sf-dump-note>array:6</span> [<samp>
+        "<span class=sf-dump-key>code</span>" => <span class=sf-dump-num>33027471</span>
+        "<span class=sf-dump-key>opinion</span>" => <span class=sf-dump-num>33027471</span>
+        "<span class=sf-dump-key>creationDate</span>" => "<span class=sf-dump-str title="20 characters">2012-08-07T15:35:00Z</span>"
+        "<span class=sf-dump-key>writer</span>" => <span class=sf-dump-note>array:3</span> [<samp>
+          "<span class=sf-dump-key>code</span>" => "<span class=sf-dump-str title="24 characters">Z20120318112307003102189</span>"
+          "<span class=sf-dump-key>name</span>" => "<span class=sf-dump-str title="11 characters">FanAvatar09</span>"
+          "<span class=sf-dump-key>avatar</span>" => "<span class=sf-dump-str title="90 characters">http://fr.web.img2.acsta.net/avatar/FR/9/8/1/Z20120318112307003102189/img/bedfmfc2.uzg.jpg</span>"
+        </samp>]
+        "<span class=sf-dump-key>body</span>" => "<span class=sf-dump-str title="6156 characters">Batman &amp; Robin est non seulement une insulte envers Batman mais il aussi un des plus gros nanars de tous les temps!!!!! Comment Joel Schumacher a-t-il pu avoir l&#039;id&eacute;e de r&eacute;aliser cette bouse???!!!!!!! Et Comment Warner a pu accepter le projet????!!!!!! Le cannabis c&#039;est fort mais l&agrave; ils ont vraiment exag&eacute;r&eacute;s sur la dose!!!!!!! Je vous jure, ce film n&#039;a AUCUN point positif!!!!!!!!!!!!!! On peut chercher pendant des heures si on veut, on ne trouvera que des points n&eacute;gatifs dans cette merde qu&#039;on ose appeler un film!!!!! Pour une fois, je vais faire une critique qui regroupe tout les truc nuls qu&#039;il y a dans le film donc cette critique va beaucoup spoiler. Le film commence avec l&#039;assemblage du logo de Batman et celui de Robin invent&eacute; sp&eacute;cialement pour le film et APR&Egrave;S &Ccedil;A..... Le cauchemar commence et n&#039;a pas de fin!!!!!!!!!!! On se souvenait de l&#039;introduction de Batman Forever avec des gros plans sur chaque partie importante du costume de Batman ( c&#039;&eacute;tait plut&ocirc;t styl&eacute; faut avouer ) mais L&Agrave;!!!!!! Les costumes de Batman et de Robin ont des T&Eacute;TONS!!!!!!!!!!!!!!! DES T&Eacute;TONS!!!!!!!!!!!!!! Je vous parlais des gros plans sur le costumes dans le premier mais L&Agrave;!!!!!!!! SCHUMACHER MET DES GROS PLANS SUR LEURS CULS!!!!!!!!!!!!!!!!!! SUR LEURS CULS!!!!!!!!!!!!!! Ensuite, Schumacher filme les ceintures des 2 h&eacute;ros mais bizarrement elles sont situ&eacute;es en haut du plan et pas au milieu, je vous laisse donc deviner ce qui est mis en &eacute;vidence.......AAAAHHHHHH!!!!!!!!!!!! PUTAIN!!!!!!!! On est dans un film de SUPER-H&Eacute;ROS je vous rappelle!!!!! Ensuite, un m&eacute;chant connu de l&#039;univers de Batman fait son apparition dans le film, Mister Freeze. Et alors L&Agrave;!!!!!! Les r&eacute;pliques de merde et jeux de mots pourris d&eacute;boulent par centaines et le rire prend le dessus sur les envies suicidaires!!!!!!!!!! C&#039;est simple, Freeze attaque un mus&eacute;e pour voler un diamant, Batman intervient et dit avec un grand s&eacute;rieux: &quot; Salut Freeze! Je suis Batman! &quot; WTF????!!!!!! George Clooney a du aval&eacute; une tonne de shit avant de dire &ccedil;a!!!!! Et il n&#039;y a pas que Clooney qui est pitoyable dans cette sc&egrave;ne, il y a aussi son doubleur fran&ccedil;ais!!!! Je reviens &agrave; la sc&egrave;ne, Batman et Robin vont combattre les hommes de Mister Freeze arm&eacute;s de crosses sur la glace et Freeze va vouloir faire exploser une fus&eacute;e en altitude mais va &eacute;chouer et nos deux h&eacute;ros vont le poursuivre dans une chaudi&egrave;re mais Robin va se faire congeler et Freeze va donc s&#039;&eacute;chapper. Et voil&agrave; toutes les r&eacute;pliques et jeux de mots de merde: &quot; C&#039;est l&#039;iceberg qui d&eacute;barque! &quot;, &quot; Salut Freeze! Je suis Batman! &quot;, &quot; Ils nous cherchent des crosses! &quot;, &quot; Ne compte pas me mettre au frais! &quot;, &quot; R&eacute;cup&eacute;rez le diamant et tuez les h&eacute;ros! Ouais! Tuez ces types! Tuez ces types! Ouais! Ouais! &quot;, &quot; &Agrave; toi la glace, &agrave; moi l&#039;iceberg! &quot;, &quot; Freeze! T&#039;es givr&eacute;! En d&eacute;truisant cette capsule, tu tueras des milliers d&#039;innocents! &quot;, &quot; &Ccedil;a g&egrave;le dans la chaudi&egrave;re!!!! &quot;, &quot; Reste cool Robin des bois! &quot;. Et tout &ccedil;a en m&ecirc;me pas 5 minutes !!!!!!! Et il ne faut m&ecirc;me pas compter sur la musique pour redresser le niveau car elle se r&eacute;p&egrave;te sans cesse jusqu&#039;&agrave; l&#039;&eacute;coeurement le plus total!!!! Ensuite, on voit la cachette secr&egrave;te de Mister Freeze... qui est une t&ecirc;te de bonhomme de neige g&eacute;ante..... bien entendu, personne dans Gotham n&#039;est choqu&eacute;...... Oh mon dieu!!!!!! Et L&Agrave;!!!!!!! On a droit au look du m&eacute;chant de Batman le plus ridicule qu&#039;on ai vu..... MISTER FREEZE AVEC DES CHAUSSONS OURS ET UN PEIGNOIR DE BAIN BLEU!!!!!!!!!!!!!! SCHUMACHER, T&#039;AS FUM&Eacute; QUOI???????!!!!!!!!!!!!!!!!!! On fait aussi connaissance de Poison Ivy ( qui ressemble &agrave; une pute ) et de Bane qui forment un des duos les plus path&eacute;tiques qu&#039;on ai vu dans un film de super-h&eacute;ros jusqu&#039;&agrave; pr&eacute;sent!!!!!! Mais j&#039;ai oubli&eacute; de parler du casting qui est...... PITOYABLE!!!!!!!!!!!! Les stars sont nombreuses mais sont toutes pourrissimes!!!!!! Clooney est ridicule, Schwarzenegger est saoulant, O&#039;Donnell est chiant, Thurman ressemble &agrave; vous savez quoi, Silverstone n&#039;a aucun charisme, le seul rescap&eacute; dans tout &ccedil;a c&#039;est Michael Gough qui essaye de faire ce qu&#039;il peut pour &ecirc;tre attachant mais la r&eacute;alisation est tellement mis&eacute;rable qu&#039;on s&#039;en fout. Revenons &agrave; l&#039;histoire, Poison Ivy se vend elle-m&ecirc;me aux ench&egrave;res, Batman et Robin sont aussi l&agrave; et veulent l&#039;acheter car ils sont empoisonn&eacute;s par son souffle et alors L&Agrave;!!!!!! BATMAN SORT SA CARTE BANCAIRE!!!!!!!!!!!!!!!! SA CARTE BANCAIRE!!!!!!!!!!!!!! Non mais vous imaginer Bruce Wayne en costume de Batman aller retirer de l&#039;argent &agrave; la banque?????!!!!!!!!!! Poison Ivy va tenter de d&eacute;livrer Freeze qui est &agrave; nouveau en prison avec l&#039;aide de Bane et on a ENCORE droit &agrave; des r&eacute;pliques et des jeux de mots de merde!!!!!! Exemple: &quot; Quoi? Je te fais une peur bleue? &quot;, &quot; Un gar&ccedil;on livreur qui d&eacute;livre aussi? &quot;, &quot; Donne ou je te refroidis les branches! &quot; et celle qui m&#039;a le plus traumatis&eacute;..... &quot; Je dois aller chercher mes diamants dans ma caverne. &quot; - &quot; J&#039;te les empoignerai avec joie tes diamants. &quot; QUOI??????!!!!!!!!!!!!!!!!! Qu&#039;est-ce qu&#039;on doit comprendre par l&agrave;?????!!!!!! Que Poison Ivy va masser les couilles de Mister Freeze????!!!!!!! Bon, je passe &agrave; la fin qui est vraiment hilarante sans le vouloir, &agrave; la fin du film Batgirl entre en sc&egrave;ne, Freeze compte congeler Gotham avec une arme gigantesque, Batman, Robin et Batgirl ont appris son plan par Poison Ivy et que faut-il faire quand Gotham City n&#039;a plus que 11 minutes avant d&#039;&ecirc;tre congel&eacute;e pour toujours? Il fat changer de costumes bien s&ucirc;r!!! En plus, les costumes sont hideux et il n&#039;y a aucun &eacute;quipement de plus que sur l&#039;ancienne!!!! Alors voici toutes les r&eacute;pliques et calembours de merde: &quot; Pr&eacute;visions m&eacute;t&eacute;o, &ccedil;a va geler! &quot;, &quot; Aucun signe du bonhomme de neige! &quot; - &quot; Il a peut-&ecirc;tre fondu! &quot; - &quot; Non, il doit hiberner! &quot;, &quot; Tu perds ton sang-froid Freeze! &quot;, &quot; Freeze, alors &ccedil;a chauffe? &quot;,  &quot; Merci Batman! Merci Batman! Merci! &quot; et j&#039;en passe.... &Eacute;videmment, le d&eacute;cors ne sont pas cr&eacute;dibles du tout et ils sont moches, la photo est nulle, les costumes sont rat&eacute;s, c&#039;est mal film&eacute;, c&#039;est mal jou&eacute;. Je vous l&#039;ai donc dit, aucun point positif!!!!!! En conclusion, l&#039;un des pires navets que j&#039;ai vu &agrave; ce jour!!!!!!!!!!!! UNE BOUSE MONUMENTALE!!!!!!!!!!!</span>"
+        "<span class=sf-dump-key>rating</span>" => <span class=sf-dump-num>0.5</span>
+      </samp>]
+    </samp>]
+  </samp>]
+</samp>]
+</pre><script>Sfdump("sf-dump-660838885")</script>
+"

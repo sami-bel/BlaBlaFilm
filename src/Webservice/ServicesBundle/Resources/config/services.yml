@@ -1,0 +1,10 @@
+services:
+    services.users:
+        class: Webservice\ServicesBundle\Services\Users\Users
+
+    services.twitter:
+        class: Webservice\ServicesBundle\Services\Twitter\Twitter
+
+    services.film:
+        class: Webservice\ServicesBundle\Services\Film\Films
+        arguments: ["@doctrine.orm.default_entity_manager", "@serializer"]
