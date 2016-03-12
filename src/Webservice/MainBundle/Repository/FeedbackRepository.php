@@ -10,7 +10,7 @@ namespace Webservice\MainBundle\Repository;
  */
 class FeedbackRepository extends \Doctrine\ORM\EntityRepository
 {
-    // type de feedback : indique à quoi on donne l'avais 
+    // type de feedback : indique à quoi on donne l'avais
     private $senace = 1 ;
     private $film = 2;
     private $user = 3;

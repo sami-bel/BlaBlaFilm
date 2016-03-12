@@ -56,6 +56,7 @@ class FeedBacks extends Controller
     }
 
     /**
+     * recuperer les feed back d une seance
      * @param $idSeance
      * @return array
      */
@@ -114,22 +115,66 @@ class FeedBacks extends Controller
     }
 
     /**
+     * recuperer les feed back d un user (participant ou bien organisateur)
      * @param $idUser
      * @return array
      */
     public function getFeedBackUser($idUser)
     {
-        $users =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findFeedbackUser($idUser);
+        $users =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findAllFeedbackUser($idUser);
         $users = $this->serializer->toArray($users);
         return $users;
     }
 
+    /**
+     * delete le feedback d un user ( pour supprimer l avais qu on a laisé à un user
+     * @param $idUser
+     * @param $idExaminer
+     * @param $idFeedback
+     * @return string
+     */
+    public function deleteFeedBackUser($idUser, $idExaminer ,$idFeedback)
+    {
+        $users =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findFbUserDelete($idUser,$idExaminer,$idFeedback);
+        foreach($users as $feedback)
+        {
+            $this->em->remove($feedback);
+        }
+        $this->em->flush();
+        return "le feedBack a été bien supprimé ";
+    }
+
+    /**
+     *  recuperer les feed back d un equipment 
+     * @param $idEquip
+     * @return array
+     */
+
     public function getFeedBackEquipment($idEquip)
     {
-        $equipment =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findFeedbackEquipment($idEquip);
+        $equipment =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findAllFeedbackEquipment($idEquip);
         $equipment = $this->serializer->toArray($equipment);
         return $equipment;
     }
+
+    /**
+     * delete le feedback d un equipment
+     * @param $idEquipment
+     * @param $idExaminer
+     * @param $idFeedback
+     * @return string
+     */
+    public function deleteFeedBackEquipment($idEquipment, $idExaminer ,$idFeedback)
+    {
+        $Equipments =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findFbEquipmentDelete($idEquipment,$idExaminer,$idFeedback);
+        foreach($Equipments as $feedback)
+        {
+            $this->em->remove($feedback);
+        }
+        $this->em->flush();
+        return "le feedBack a été bien supprimé ";
+    }
+
 
 
 
