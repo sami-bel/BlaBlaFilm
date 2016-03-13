@@ -47,14 +47,14 @@ class FeedBacks extends Controller
         $examine =$this->em->getRepository("WebserviceMainBundle:User")->find($idExaminer);
 
         $feedBack= new Feedback();
-            $feedBack->setIdExaminer($examine);
-            $feedBack->setIdTarget($idTarget);
-            $feedBack->setTypeFeedback($typeFeedBack);
-            $feedBack->setEvaluation($evaluation);
-            $feedBack->setRating($rating);
+        $feedBack->setIdExaminer($examine);
+        $feedBack->setIdTarget($idTarget);
+        $feedBack->setTypeFeedback($typeFeedBack);
+        $feedBack->setEvaluation($evaluation);
+        $feedBack->setRating($rating);
 
-            $this->em->persist($feedBack);
-            $this->em->flush();
+        $this->em->persist($feedBack);
+        $this->em->flush();
 
         return "le feedBack est bien enrigistré";
     }
@@ -66,7 +66,7 @@ class FeedBacks extends Controller
      */
     public function getFeedBackSeance($idSeance)
     {
-        $seances =$this->em->getRepository("WebserviceMainBundle:Feedback")->findAllFeedbackSeance(2);
+        $seances =$this->em->getRepository("WebserviceMainBundle:Feedback")->findAllFeedbackSeance($idSeance);
         dump($seances);
         $seances = $this->serializer->toArray($seances);
         return $seances;

@@ -16,3 +16,7 @@ services:
     services.feedBack:
         class: Webservice\ServicesBundle\Services\FeedBack\FeedBacks
         arguments: ["@doctrine.orm.default_entity_manager", "@serializer"]
+
+    services.adresse:
+            class: Webservice\ServicesBundle\Services\Adresse\Adresses
+            arguments: ["@doctrine.orm.default_entity_manager", "@serializer"]

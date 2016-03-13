@@ -10,4 +10,15 @@ namespace Webservice\MainBundle\Repository;
  */
 class AddressRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAdressUser($user)
+    {
+
+        $qb = $this ->createQueryBuilder('a');
+        $qb ->where('a.idUser = :idUser')
+            ->setParameter('idUser',$user);
+
+        $resultat =$qb->getQuery() ;
+        return $resultat->getResult();
+
+    }
 }

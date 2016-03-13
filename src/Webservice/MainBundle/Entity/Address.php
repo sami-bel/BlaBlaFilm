@@ -63,12 +63,7 @@ class Address
      */
     private $postcode;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Webservice\MainBundle\Entity\Equipment")
-     * @ORM\JoinColumn(nullable=false)
-     *
-     */
-    private $idEquipment;
+
 
 
     /**
@@ -84,7 +79,7 @@ class Address
     /**
      * Set numbre
      *
-     * @param integer $numbre
+     * @param int $numbre
      *
      * @return Address
      */
@@ -226,27 +221,5 @@ class Address
         return $this->idUser;
     }
 
-    /**
-     * Set idEquipment
-     *
-     * @param \Webservice\MainBundle\Entity\Equipment $idEquipment
-     *
-     * @return Address
-     */
-    public function setIdEquipment(\Webservice\MainBundle\Entity\Equipment $idEquipment = null)
-    {
-        $this->idEquipment = $idEquipment;
 
-        return $this;
-    }
-
-    /**
-     * Get idEquipment
-     *
-     * @return \Webservice\MainBundle\Entity\Equipment
-     */
-    public function getIdEquipment()
-    {
-        return $this->idEquipment;
-    }
 }
