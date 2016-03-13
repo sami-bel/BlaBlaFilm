@@ -45,7 +45,6 @@ class FeedBacks extends Controller
     {
 
         $examine =$this->em->getRepository("WebserviceMainBundle:User")->find($idExaminer);
-        dump($examine);
 
         $feedBack= new Feedback();
             $feedBack->setIdExaminer($examine);
@@ -65,12 +64,15 @@ class FeedBacks extends Controller
      * @param $idSeance
      * @return array
      */
-    public function getFeedBackSenace($idSeance)
+    public function getFeedBackSeance($idSeance)
     {
-        $seances =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findAllFeedbackSeance($idSeance);
+        $seances =$this->em->getRepository("WebserviceMainBundle:Feedback")->findAllFeedbackSeance(2);
+        dump($seances);
         $seances = $this->serializer->toArray($seances);
         return $seances;
     }
+
+
 
     /**
      * supprimer le feedBack des films
@@ -78,9 +80,9 @@ class FeedBacks extends Controller
      * @param $idExaminer
      * @return string
      */
-    public function deleteFeedBackSenace($idSeance, $idExaminer ,$idFeedback)
+    public function deleteFeedBackSenace($idFeedback,$idExaminer,$idSeance)
     {
-        $seances =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findFbSeanceDelete($idSeance,$idExaminer,$idFeedback);
+        $seances =$this->em->getRepository("WebserviceMainBundle:Feedback")->findFbSeanceDelete($idFeedback,$idExaminer,$idSeance);
         foreach($seances as $feedback)
         {
             $this->em->remove($feedback);
@@ -96,7 +98,7 @@ class FeedBacks extends Controller
      */
     public function getFeedBackFilm($idFilm)
     {
-        $films =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findAllFeedbackFilm($idFilm);
+        $films =$this->em->getRepository("WebserviceMainBundle:Feedback")->findAllFeedbackFilm($idFilm);
         $films = $this->serializer->toArray($films);
         return $films;
     }
@@ -108,9 +110,9 @@ class FeedBacks extends Controller
      * @param $idFeedback
      * @return string
      */
-    public function deleteFeedBackFilm($idFilm, $idExaminer ,$idFeedback)
+    public function deleteFeedBackFilm($idFeedback,$idExaminer,$idFilm)
     {
-        $films =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findFbFilmDelete($idFilm,$idExaminer,$idFeedback);
+        $films =$this->em->getRepository("WebserviceMainBundle:Feedback")->findFbFilmDelete($idFeedback,$idExaminer,$idFilm);
         foreach($films as $feedback)
         {
             $this->em->remove($feedback);
@@ -126,7 +128,7 @@ class FeedBacks extends Controller
      */
     public function getFeedBackUser($idUser)
     {
-        $users =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findAllFeedbackUser($idUser);
+        $users =$this->em->getRepository("WebserviceMainBundle:Feedback")->findAllFeedbackUser($idUser);
         $users = $this->serializer->toArray($users);
         return $users;
     }
@@ -138,9 +140,9 @@ class FeedBacks extends Controller
      * @param $idFeedback
      * @return string
      */
-    public function deleteFeedBackUser($idUser, $idExaminer ,$idFeedback)
+    public function deleteFeedBackUser($idFeedback,$idExaminer,$idUser)
     {
-        $users =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findFbUserDelete($idUser,$idExaminer,$idFeedback);
+        $users =$this->em->getRepository("WebserviceMainBundle:Feedback")->findFbUserDelete($idFeedback,$idExaminer,$idUser);
         foreach($users as $feedback)
         {
             $this->em->remove($feedback);
@@ -157,7 +159,7 @@ class FeedBacks extends Controller
 
     public function getFeedBackEquipment($idEquip)
     {
-        $equipment =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findAllFeedbackEquipment($idEquip);
+        $equipment =$this->em->getRepository("WebserviceMainBundle:Feedback")->findAllFeedbackEquipment($idEquip);
         $equipment = $this->serializer->toArray($equipment);
         return $equipment;
     }
@@ -169,9 +171,9 @@ class FeedBacks extends Controller
      * @param $idFeedback
      * @return string
      */
-    public function deleteFeedBackEquipment($idEquipment, $idExaminer ,$idFeedback)
+    public function deleteFeedBackEquipment($idFeedback,$idExaminer,$idEquip)
     {
-        $Equipments =$this->em->getRepository("WebserviceMainBundle:FeedBack")->findFbEquipmentDelete($idEquipment,$idExaminer,$idFeedback);
+        $Equipments =$this->em->getRepository("WebserviceMainBundle:Feedback")->findFbEquipmentDelete($idFeedback,$idExaminer,$idEquip);
         foreach($Equipments as $feedback)
         {
             $this->em->remove($feedback);

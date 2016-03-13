@@ -61,9 +61,9 @@ class Messages extends Controller
      * @param $id
      * @return array
      */
-    public function getMessagesRecived($id)
+    public function getMessagesRecived($idUser)
     {
-        $messages = $this->em->getRepository("WebserviceMainBundle:Message")->findBy(array("idRecived" => $id));
+        $messages = $this->em->getRepository("WebserviceMainBundle:Message")->findBy(array("idRecived" => $idUser, "flag"=> array(1,0)));
         //Convert l'object en array
         $messages = $this->serializer->toArray($messages);
         return $messages;
@@ -74,9 +74,9 @@ class Messages extends Controller
      * @param $id
      * @return array
      */
-    public function getMessagesSend($id)
+    public function getMessagesSend($idUser)
     {
-        $messages = $this->em->getRepository("WebserviceMainBundle:Message")->findBy(array("ididSend" => $id));
+        $messages = $this->em->getRepository("WebserviceMainBundle:Message")->findBy(array("idSend" => $idUser, "flag"=> array(2,0)));
         //Convert l'object en array
         $messages = $this->serializer->toArray($messages);
         return $messages;
@@ -87,9 +87,9 @@ class Messages extends Controller
      * @param $id
      * @return array
      */
-    public function getMessage($id)
+    public function getMessage($idMessage)
     {
-        $message = $this->em->getRepository("WebserviceMainBundle:Message")->findBy(array("id" => $id));
+        $message = $this->em->getRepository("WebserviceMainBundle:Message")->findBy(array("id" => $idMessage));
         $message = $this->serializer->toArray($message);
         return $message;
     }
@@ -98,34 +98,38 @@ class Messages extends Controller
      * delete message
      *     $idMessage : le message à supprimer
      *     $idUser :le user qui veut supprimer le message
+     * la suppression d un message consiste à changer le flag ( 1 supprimé par le sendre; par le recived ; 3 par les 2)
      * @param $idMessage
      * @param $idUser
      * @return Response
      */
     public function deleteMessage($idMessage, $idUser)
     {
-        $message = $this->em->getRepository("WebserviceMainBundle:Message")->findBy(array("id" => $idMessage));
+        $message = $this->em->getRepository("WebserviceMainBundle:Message")->find($idMessage);
 
-        var_dump($message);
-        exit();
-        if(!$idMessage) {
+        if ($message ==null) {
+
             return "Le message n'existe pas ";
-        }
-        if ($message->getIdSend()== $idUser )
 
-        {
-
-            if ($message->getFlag() == 0 and $message->getFlag() != 1  )
-                $message->setFlag(1); // le message serai supprimé par le sendre
-            else $message->setFlag(3);
         }
-        elseif ($message->getFlag() == 0 and $message->getFlag() != 2 )
-        {
-            $message->setFlag(2);
-        }
-        else $message->setFlag(3);
+        $sender = $message->getIdSend();
+        $revived = $message->getIdRecived();
+        if ($idUser == $sender->getId() or $idUser == $revived->getId()) {
 
-        $this->em->flush();
+
+            if ($sender->getId() == $idUser) {
+                if ($message->getFlag() == 0 and $message->getFlag() != 1) {
+                    $message->setFlag(1);
+                } // le message serai supprimé par le sendre
+
+                else $message->setFlag(3);
+            } elseif ($message->getFlag() == 0 and $message->getFlag() != 2) {
+                $message->setFlag(2);
+            } else $message->setFlag(3);
+
+            $this->em->flush();
+            return "le message est bien supprime";
+
+        } else  return "l utilisateur n'existe pas ";
     }
-
 }
